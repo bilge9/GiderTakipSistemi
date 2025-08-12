@@ -49,8 +49,8 @@ namespace GiderTakipSistemi.Controllers
         // GET: GiderFis/Create
         public IActionResult Create()
         {
-            ViewData["CariKayitId"] = new SelectList(_context.CariKayitlar, "Id", "Id");
-            ViewData["GiderKalemId"] = new SelectList(_context.GiderKalemleri, "Id", "Id");
+            ViewData["CariKayitId"] = new SelectList(_context.CariKayitlar, "Id", "AdiSoyadi");
+            ViewData["GiderKalemId"] = new SelectList(_context.GiderKalemleri, "Id", "Adi");
             return View();
         }
 
@@ -67,8 +67,8 @@ namespace GiderTakipSistemi.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CariKayitId"] = new SelectList(_context.CariKayitlar, "Id", "Id", giderFis.CariKayitId);
-            ViewData["GiderKalemId"] = new SelectList(_context.GiderKalemleri, "Id", "Id", giderFis.GiderKalemId);
+            ViewData["CariKayitId"] = new SelectList(_context.CariKayitlar, "Id", "AdiSoyadi", giderFis.CariKayitId);
+            ViewData["GiderKalemId"] = new SelectList(_context.GiderKalemleri, "Id", "Adi", giderFis.GiderKalemId);
             return View(giderFis);
         }
 
@@ -122,8 +122,8 @@ namespace GiderTakipSistemi.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CariKayitId"] = new SelectList(_context.CariKayitlar, "Id", "Id", giderFis.CariKayitId);
-            ViewData["GiderKalemId"] = new SelectList(_context.GiderKalemleri, "Id", "Id", giderFis.GiderKalemId);
+            ViewData["CariKayitId"] = new SelectList(_context.CariKayitlar, "Id", "AdiSoyadi", giderFis.CariKayitId);
+            ViewData["GiderKalemId"] = new SelectList(_context.GiderKalemleri, "Id", "Adi", giderFis.GiderKalemId);
             return View(giderFis);
         }
 
