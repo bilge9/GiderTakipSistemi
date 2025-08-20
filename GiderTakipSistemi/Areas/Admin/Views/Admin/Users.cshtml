@@ -1,0 +1,28 @@
+﻿@model IEnumerable<GiderTakipSistemi.Models.UserRolesViewModel>
+@{
+    ViewData["Title"] = "Kullanıcılar";
+}
+
+<h2>Kullanıcılar</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Roller</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Email</td>
+                <td>@string.Join(", ", user.Roles)</td>
+                <td>
+                    <a asp-action="EditRoles" asp-route-userId="@user.UserId" class="btn btn-sm btn-primary">Rolleri Düzenle</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

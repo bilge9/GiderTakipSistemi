@@ -1,0 +1,22 @@
+﻿@model GiderTakipSistemi.Models.EditRolesViewModel
+@{
+    ViewData["Title"] = "Rolleri Düzenle";
+}
+
+<h2>Rolleri Düzenle: @Model.Email</h2>
+
+<form asp-action="EditRoles" method="post">
+    <input type="hidden" asp-for="UserId" />
+
+    @foreach (var role in Model.Roles)
+    {
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox"
+                   name="SelectedRoles" value="@role"
+                   @(Model.UserRoles.Contains(role) ? "checked" : "") />
+            <label class="form-check-label">@role</label>
+        </div>
+    }
+
+    <button type="submit" class="btn btn-success mt-2">Kaydet</button>
+</form>
