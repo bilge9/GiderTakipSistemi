@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//Veritabaný baðlantýsý
+//Veritabanï¿½ baï¿½lantï¿½sï¿½
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("GiderTakipDB")));
 // Add services to the container.
@@ -13,7 +13,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddRazorPages();//Identity sayfalarý için
+builder.Services.AddRazorPages();//Identity sayfalarï¿½ iï¿½in
 
 var app = builder.Build();
 
@@ -33,7 +33,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapRazorPages();//Identity sayfalarý için
+app.MapRazorPages();//Identity sayfalarï¿½ iï¿½in
 
 app.MapControllerRoute(
     name: "default",

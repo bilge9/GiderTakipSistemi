@@ -12,7 +12,6 @@ namespace GiderTakipSistemi.Data
         public DbSet<CariKayit> CariKayitlar { get; set; }
         public DbSet<GiderFis> GiderFisleri { get; set; }
         public DbSet<GiderKalem> GiderKalemleri { get; set; }
-        public DbSet<Kullanici> Kullanicilar { get; set; }
 
         //Tutarlar çok büyük veya hassas olursa veri kaybını önlemek için
         protected override void OnModelCreating(ModelBuilder modelBuilder)

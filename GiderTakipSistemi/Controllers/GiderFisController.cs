@@ -122,8 +122,8 @@ namespace GiderTakipSistemi.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CariKayitId"] = new SelectList(_context.CariKayitlar, "Id", "AdiSoyadi", giderFis.CariKayitId);
-            ViewData["GiderKalemId"] = new SelectList(_context.GiderKalemleri, "Id", "Adi", giderFis.GiderKalemId);
+            ViewData["CariKayitId"] = new SelectList(_context.CariKayitlar, "Id", "AdSoyad", giderFis.CariKayitId);
+            ViewData["GiderKalemId"] = new SelectList(_context.GiderKalemleri, "Id", "KalemAdi", giderFis.GiderKalemId);
             return View(giderFis);
         }
 
