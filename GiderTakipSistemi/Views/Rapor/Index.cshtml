@@ -1,0 +1,82 @@
+﻿<form method="get" asp-action="Index" asp-controller="Rapor" class="mb-3">
+    <div class="row">
+        <div class="col-md-3">
+            <label>Başlangıç Tarihi</label>
+            <input type="date" name="baslangic" value="@ViewBag.Baslangic" class="form-control" />
+        </div>
+        <div class="col-md-3">
+            <label>Bitiş Tarihi</label>
+            <input type="date" name="bitis" value="@ViewBag.Bitis" class="form-control" />
+        </div>
+        <div class="col-md-3">
+            <label>Cari</label>
+            <select name="cariId" class="form-control">
+                <option value="">Hepsi</option>
+                @foreach (var c in ViewBag.CariList)
+                {
+                    <option value="@c.Value" selected="@(c.Value == ViewBag.CariId?.ToString())">@c.Text</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label>Gider Kalemi</label>
+            <select name="kalemId" class="form-control">
+                <option value="">Hepsi</option>
+                @foreach (var k in ViewBag.KalemList)
+                {
+                    <option value="@k.Value" selected="@(k.Value == ViewBag.KalemId?.ToString())">@k.Text</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-3 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary">Filtrele</button>
+        </div>
+    </div>
+</form>
+
+<h3>Genel Toplam Gider</h3>
+<p><strong>@ViewBag.ToplamGider</strong> TL</p>
+
+<hr />
+
+<h3>Cari Bazlı Giderler</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Cari</th>
+            <th>Toplam Tutar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.CariBazli)
+        {
+            <tr>
+                <td>@item.Cari</td>
+                <td>@item.ToplamTutar</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<hr />
+
+<h3>Gider Kalemi Bazlı Giderler</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Kalem</th>
+            <th>Toplam Tutar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.KalemBazli)
+        {
+            <tr>
+                <td>@item.Kalem</td>
+                <td>@item.ToplamTutar</td>
+            </tr>
+        }
+    </tbody>
+</table>

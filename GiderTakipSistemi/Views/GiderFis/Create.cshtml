@@ -1,46 +1,37 @@
 ﻿@model GiderTakipSistemi.Models.GiderFis
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Yeni Gider Fişi";
 }
 
-<h1>Create</h1>
+<h1>Yeni Gider Fişi</h1>
 
-<h4>GiderFis</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="GiderKalemId" class="control-label"></label>
-                <select asp-for="GiderKalemId" class ="form-control" asp-items="ViewBag.GiderKalemId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="CariKayitId" class="control-label"></label>
-                <select asp-for="CariKayitId" class ="form-control" asp-items="ViewBag.CariKayitId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Tutar" class="control-label"></label>
-                <input asp-for="Tutar" class="form-control" />
-                <span asp-validation-for="Tutar" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Tarih" class="control-label"></label>
-                <input asp-for="Tarih" class="form-control" />
-                <span asp-validation-for="Tarih" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Tarih" class="control-label"></label>
+        <input asp-for="Tarih" class="form-control" type="date" />
+        <span asp-validation-for="Tarih" class="text-danger"></span>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="form-group">
+        <label asp-for="Tutar" class="control-label"></label>
+        <input asp-for="Tutar" class="form-control" type="number" step="0.01" />
+        <span asp-validation-for="Tutar" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Cari</label>
+        <select asp-for="CariKayitId" asp-items="ViewBag.CariList" class="form-control"></select>
+    </div>
+    <div class="form-group">
+        <label>Gider Kalemi</label>
+        <select asp-for="GiderKalemId" asp-items="ViewBag.KalemList" class="form-control"></select>
+    </div>
+    <div class="form-group mt-3">
+        <input type="submit" value="Kaydet" class="btn btn-primary" />
+    </div>
+</form>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
