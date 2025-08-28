@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace GiderTakipSistemi.Models
 {
@@ -13,5 +14,8 @@ namespace GiderTakipSistemi.Models
 
         public decimal Tutar { get; set; }
         public DateTime Tarih { get; set; }
+
+        public string? UserId { get; set; }
+        public IdentityUser? User { get; set; }
     }
 }
