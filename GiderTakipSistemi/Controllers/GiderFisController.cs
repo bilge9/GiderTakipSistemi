@@ -171,5 +171,44 @@ namespace GiderTakipSistemi.Controllers
         {
             return _context.GiderFisleri.Any(e => e.Id == id);
         }
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AdminIndex()
+        {
+            var giderler = _context.GiderFisleri
+                .Include(g => g.CariKayit)
+                .Include(g => g.GiderKalem)
+                .Include(g => g.User);
+
+            return View(giderler.ToList());
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult AdminCreate()
+        {
+            ViewBag.UserList = new SelectList(_context.Users, "Id", "Email");
+            ViewBag.CariList = new SelectList(_context.CariKayitlar, "Id", "AdSoyad");
+            ViewBag.KalemList = new SelectList(_context.GiderKalemleri, "Id", "KalemAdi");
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AdminCreate([Bind("UserId,Tarih,Tutar,CariKayitId,GiderKalemId")] GiderFis giderFis)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(giderFis);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(AdminIndex));
+            }
+
+            ViewBag.UserList = new SelectList(_context.Users, "Id", "Email", giderFis.UserId);
+            ViewBag.CariList = new SelectList(_context.CariKayitlar, "Id", "AdSoyad", giderFis.CariKayitId);
+            ViewBag.KalemList = new SelectList(_context.GiderKalemleri, "Id", "KalemAdi", giderFis.GiderKalemId);
+            return View(giderFis);
+        }
+
     }
 }

@@ -16,5 +16,6 @@ namespace GiderTakipSistemi.Models
         public DateTime Tarih { get; set; }
 
         public string? UserId { get; set; }
+        public ApplicationUser? User { get; set; }
     }
 }

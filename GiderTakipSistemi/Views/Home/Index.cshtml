@@ -10,3 +10,17 @@
 <a asp-controller="GiderFis" asp-action="Create" class="btn btn-success">
     Yeni Gider Fişi Ekle
 </a>
+@if (User.IsInRole("Admin"))
+{
+    <a asp-area="Admin" asp-controller="Gider" asp-action="Index" class="btn btn-primary">
+        Tüm Giderleri Gör (Admin)
+    </a>
+
+    <a asp-area="Admin" asp-controller="Gider" asp-action="Create" class="btn btn-success">
+        Yeni Gider Ekle (Admin)
+    </a>
+}
+
+
+
+
