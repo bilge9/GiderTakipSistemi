@@ -15,12 +15,12 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="GiderKalemId" class="control-label"></label>
-                <select asp-for="GiderKalemId" class="form-control" asp-items="ViewBag.GiderKalemId"></select>
+                <select asp-for="GiderKalemId" class="form-control" asp-items="ViewBag.KalemList"></select>
                 <span asp-validation-for="GiderKalemId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CariKayitId" class="control-label"></label>
-                <select asp-for="CariKayitId" class="form-control" asp-items="ViewBag.CariKayitId"></select>
+                <select asp-for="CariKayitId" class="form-control" asp-items="ViewBag.CariList"></select>
                 <span asp-validation-for="CariKayitId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -33,6 +33,11 @@
                 <input asp-for="Tarih" class="form-control" />
                 <span asp-validation-for="Tarih" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserList"></select>
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

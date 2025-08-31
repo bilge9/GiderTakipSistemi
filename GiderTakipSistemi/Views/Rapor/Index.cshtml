@@ -1,13 +1,10 @@
 ﻿<form method="get" asp-action="Index" asp-controller="Rapor" class="mb-3">
     <div class="row">
         <div class="col-md-3">
-            <label>Başlangıç Tarihi</label>
+            <label>Tarih</label>
             <input type="date" name="baslangic" value="@ViewBag.Baslangic" class="form-control" />
         </div>
-        <div class="col-md-3">
-            <label>Bitiş Tarihi</label>
-            <input type="date" name="bitis" value="@ViewBag.Bitis" class="form-control" />
-        </div>
+
         <div class="col-md-3">
             <label>Cari</label>
             <select name="cariId" class="form-control">

@@ -12,19 +12,28 @@
         <input asp-for="Tarih" class="form-control" type="date" />
         <span asp-validation-for="Tarih" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label asp-for="Tutar" class="control-label"></label>
         <input asp-for="Tutar" class="form-control" type="number" step="0.01" />
         <span asp-validation-for="Tutar" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label>Cari</label>
         <select asp-for="CariKayitId" asp-items="ViewBag.CariList" class="form-control"></select>
     </div>
+
     <div class="form-group">
         <label>Gider Kalemi</label>
         <select asp-for="GiderKalemId" asp-items="ViewBag.KalemList" class="form-control"></select>
     </div>
+
+    <div class="form-group">
+        <label>Kullanıcı</label>
+        <select asp-for="UserId" asp-items="ViewBag.UserList" class="form-control"></select>
+    </div>
+
     <div class="form-group mt-3">
         <input type="submit" value="Kaydet" class="btn btn-primary" />
     </div>

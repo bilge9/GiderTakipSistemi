@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GiderTakipSistemi.Controllers
 {
-    [Authorize] // Tüm işlemler giriş yapan kullanıcıya özel
+    [Authorize(Roles = "Admin")]
     public class GiderFisController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -22,126 +22,106 @@ namespace GiderTakipSistemi.Controllers
             _userManager = userManager;
         }
 
-        // GET: GiderFis
+        // Admin paneli: Tüm giderler
         public async Task<IActionResult> Index()
         {
-            var userId = _userManager.GetUserId(User);
-            var giderler = _context.GiderFisleri
-                .Where(g => g.UserId == userId)
+            var giderler = await _context.GiderFisleri
                 .Include(g => g.CariKayit)
-                .Include(g => g.GiderKalem);
-            return View(await giderler.ToListAsync());
+                .Include(g => g.GiderKalem)
+                .Include(g => g.User)
+                .ToListAsync();
+
+            return View(giderler);
         }
 
-        // GET: GiderFis/Create
+        // Admin: Yeni gider ekleme
         public IActionResult Create()
         {
+            ViewBag.UserList = new SelectList(_userManager.Users, "Id", "Email");
             ViewBag.CariList = new SelectList(_context.CariKayitlar, "Id", "AdSoyad");
             ViewBag.KalemList = new SelectList(_context.GiderKalemleri, "Id", "KalemAdi");
             return View();
         }
 
-        // POST: GiderFis/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Tarih,Tutar,CariKayitId,GiderKalemId")] GiderFis giderFis)
+        public async Task<IActionResult> Create([Bind("UserId,Tarih,Tutar,CariKayitId,GiderKalemId")] GiderFis giderFis)
         {
             if (ModelState.IsValid)
             {
-                giderFis.UserId = _userManager.GetUserId(User); // Kullanıcı atanıyor
                 _context.Add(giderFis);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
 
+            ViewBag.UserList = new SelectList(_userManager.Users, "Id", "Email", giderFis.UserId);
             ViewBag.CariList = new SelectList(_context.CariKayitlar, "Id", "AdSoyad", giderFis.CariKayitId);
             ViewBag.KalemList = new SelectList(_context.GiderKalemleri, "Id", "KalemAdi", giderFis.GiderKalemId);
             return View(giderFis);
         }
 
-        // GET: GiderFis/Edit/5
+        // Admin: Düzenle
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();
 
-            var userId = _userManager.GetUserId(User);
-            var giderFis = await _context.GiderFisleri
-                .Where(g => g.Id == id && g.UserId == userId)
-                .FirstOrDefaultAsync();
-
+            var giderFis = await _context.GiderFisleri.FindAsync(id);
             if (giderFis == null) return NotFound();
 
+            ViewBag.UserList = new SelectList(_userManager.Users, "Id", "Email", giderFis.UserId);
             ViewBag.CariList = new SelectList(_context.CariKayitlar, "Id", "AdSoyad", giderFis.CariKayitId);
             ViewBag.KalemList = new SelectList(_context.GiderKalemleri, "Id", "KalemAdi", giderFis.GiderKalemId);
             return View(giderFis);
         }
 
-        // POST: GiderFis/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Tarih,Tutar,CariKayitId,GiderKalemId")] GiderFis giderFis)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,Tarih,Tutar,CariKayitId,GiderKalemId")] GiderFis giderFis)
         {
             if (id != giderFis.Id) return NotFound();
-
-            var userId = _userManager.GetUserId(User);
-            var existingFis = await _context.GiderFisleri
-                .Where(g => g.Id == id && g.UserId == userId)
-                .FirstOrDefaultAsync();
-
-            if (existingFis == null) return NotFound();
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    existingFis.Tarih = giderFis.Tarih;
-                    existingFis.Tutar = giderFis.Tutar;
-                    existingFis.CariKayitId = giderFis.CariKayitId;
-                    existingFis.GiderKalemId = giderFis.GiderKalemId;
-
-                    _context.Update(existingFis);
+                    _context.Update(giderFis);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!GiderFisExists(id)) return NotFound();
+                    if (!_context.GiderFisleri.Any(e => e.Id == id)) return NotFound();
                     else throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
 
+            ViewBag.UserList = new SelectList(_userManager.Users, "Id", "Email", giderFis.UserId);
             ViewBag.CariList = new SelectList(_context.CariKayitlar, "Id", "AdSoyad", giderFis.CariKayitId);
             ViewBag.KalemList = new SelectList(_context.GiderKalemleri, "Id", "KalemAdi", giderFis.GiderKalemId);
             return View(giderFis);
         }
 
-        // GET: GiderFis/Delete/5
+        // Admin: Sil
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
 
-            var userId = _userManager.GetUserId(User);
             var giderFis = await _context.GiderFisleri
-                .Where(g => g.Id == id && g.UserId == userId)
                 .Include(g => g.CariKayit)
                 .Include(g => g.GiderKalem)
-                .FirstOrDefaultAsync();
+                .Include(g => g.User)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (giderFis == null) return NotFound();
 
             return View(giderFis);
         }
 
-        // POST: GiderFis/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var userId = _userManager.GetUserId(User);
-            var giderFis = await _context.GiderFisleri
-                .Where(g => g.Id == id && g.UserId == userId)
-                .FirstOrDefaultAsync();
-
+            var giderFis = await _context.GiderFisleri.FindAsync(id);
             if (giderFis != null)
             {
                 _context.GiderFisleri.Remove(giderFis);
@@ -150,65 +130,20 @@ namespace GiderTakipSistemi.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: GiderFis/Details/5
+        // Admin: Detaylar
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null) return NotFound();
 
-            var userId = _userManager.GetUserId(User);
             var giderFis = await _context.GiderFisleri
-                .Where(g => g.Id == id && g.UserId == userId)
                 .Include(g => g.CariKayit)
                 .Include(g => g.GiderKalem)
-                .FirstOrDefaultAsync();
+                .Include(g => g.User)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (giderFis == null) return NotFound();
 
             return View(giderFis);
         }
-
-        private bool GiderFisExists(int id)
-        {
-            return _context.GiderFisleri.Any(e => e.Id == id);
-        }
-
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> AdminIndex()
-        {
-            var giderler = _context.GiderFisleri
-                .Include(g => g.CariKayit)
-                .Include(g => g.GiderKalem)
-                .Include(g => g.User);
-
-            return View(giderler.ToList());
-        }
-
-        [Authorize(Roles = "Admin")]
-        public IActionResult AdminCreate()
-        {
-            ViewBag.UserList = new SelectList(_context.Users, "Id", "Email");
-            ViewBag.CariList = new SelectList(_context.CariKayitlar, "Id", "AdSoyad");
-            ViewBag.KalemList = new SelectList(_context.GiderKalemleri, "Id", "KalemAdi");
-            return View();
-        }
-
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AdminCreate([Bind("UserId,Tarih,Tutar,CariKayitId,GiderKalemId")] GiderFis giderFis)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(giderFis);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(AdminIndex));
-            }
-
-            ViewBag.UserList = new SelectList(_context.Users, "Id", "Email", giderFis.UserId);
-            ViewBag.CariList = new SelectList(_context.CariKayitlar, "Id", "AdSoyad", giderFis.CariKayitId);
-            ViewBag.KalemList = new SelectList(_context.GiderKalemleri, "Id", "KalemAdi", giderFis.GiderKalemId);
-            return View(giderFis);
-        }
-
     }
 }

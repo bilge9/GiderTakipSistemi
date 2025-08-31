@@ -3,24 +3,26 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Hoşgeldiniz</h1>
+    
 </div>
 
-<a asp-controller="GiderFis" asp-action="Create" class="btn btn-success">
-    Yeni Gider Fişi Ekle
-</a>
 @if (User.IsInRole("Admin"))
 {
-    <a asp-area="Admin" asp-controller="Gider" asp-action="Index" class="btn btn-primary">
+    <a asp-controller="GiderFis" asp-action="Create" class="btn btn-success">
+        Yeni Gider Fişi Ekle
+    </a>
+
+    <a asp-controller="GiderFis" asp-action="Index" class="btn btn-primary">
         Tüm Giderleri Gör (Admin)
     </a>
-
-    <a asp-area="Admin" asp-controller="Gider" asp-action="Create" class="btn btn-success">
-        Yeni Gider Ekle (Admin)
+}
+@if (User.IsInRole("User"))
+{
+    <a asp-controller="Rapor" asp-action="Index" class="btn btn-primary">
+        Raporları Görüntüle
     </a>
 }
-
 
 
 
