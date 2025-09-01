@@ -2,27 +2,30 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Hoşgeldiniz</h1>
-    
+<div class="home-header text-center">
+    <h1 class="animated-title">GİDER TAKİP SİSTEMİ</h1>
 </div>
 
-@if (User.IsInRole("Admin"))
-{
-    <a asp-controller="GiderFis" asp-action="Create" class="btn btn-success">
-        Yeni Gider Fişi Ekle
-    </a>
+<div class="text-center mt-5">
+    <h2 class="welcome-text">Hoşgeldiniz</h2>
 
-    <a asp-controller="GiderFis" asp-action="Index" class="btn btn-primary">
-        Tüm Giderleri Gör (Admin)
-    </a>
-}
-@if (User.IsInRole("User"))
-{
-    <a asp-controller="Rapor" asp-action="Index" class="btn btn-primary">
-        Raporları Görüntüle
-    </a>
-}
-
-
-
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="d-flex justify-content-center gap-3">
+            <a asp-controller="GiderFis" asp-action="Create" class="btn btn-success btn-lg shadow-sm">
+                Yeni Gider Fişi Ekle
+            </a>
+            <a asp-controller="GiderFis" asp-action="Index" class="btn btn-primary btn-lg shadow-sm">
+                Tüm Giderleri Gör (Admin)
+            </a>
+        </div>
+    }
+    @if (User.IsInRole("User"))
+    {
+        <div class="d-flex justify-content-center">
+            <a asp-controller="Rapor" asp-action="Index" class="btn btn-info btn-lg shadow-sm">
+                Raporları Görüntüle
+            </a>
+        </div>
+    }
+</div>

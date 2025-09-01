@@ -1,0 +1,48 @@
+﻿/* Arka plan ve font */
+body {
+	background: linear-gradient(135deg, #4e54c8, #8f94fb);
+	font-family: 'Poppins', sans-serif;
+	min-height: 100vh;
+	margin: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* Container */
+.login-container {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* Form kutusu */
+.login-box {
+	background: rgba(255, 255, 255, 0.1);
+	padding: 30px 25px;
+	border-radius: 12px;
+	box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+	width: 100%;
+	max-width: 400px;
+}
+
+	/* Başlık */
+	.login-box h1 {
+		text-align: center;
+		color: white;
+		margin-bottom: 25px;
+		font-size: 2.5rem;
+		font-weight: 700;
+	}
+
+/* Form kontrolleri */
+.form-control {
+	border-radius: 8px;
+}
+
+/* Buton */
+button {
+	border-radius: 8px;
+	font-weight: 600;
+}
