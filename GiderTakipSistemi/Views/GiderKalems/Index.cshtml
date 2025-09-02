@@ -1,15 +1,12 @@
 ﻿@model IEnumerable<GiderTakipSistemi.Models.GiderKalem>
 
-@{
-    ViewData["Title"] = "Index";
-}
+<div class="giderkalem-card">
+    <h1>Gider Kalemleri</h1>
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Yeni Kalem Ekle</a>
+    </p>
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+    <table class="table table-bordered">
     <thead>
         <tr>
             <th>
@@ -33,3 +30,8 @@
 }
     </tbody>
 </table>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/giderkalem.css" asp-append-version="true" />
+}

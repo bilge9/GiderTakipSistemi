@@ -1,0 +1,37 @@
+﻿@model IEnumerable<GiderTakipSistemi.Models.GiderFis>
+
+@{
+    ViewData["Title"] = "Benim Giderlerim";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Tarih</th>
+            <th>Tutar</th>
+            <th>Cari</th>
+            <th>Gider Kalemi</th>
+            <th>Detay</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Tarih.ToString("dd.MM.yyyy")</td>
+                <td>@item.Tutar</td>
+                <td>@item.CariKayit?.AdSoyad</td>
+                <td>@item.GiderKalem?.KalemAdi</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-primary">Detay</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/kullaniciGider.css" asp-append-version="true" />
+}

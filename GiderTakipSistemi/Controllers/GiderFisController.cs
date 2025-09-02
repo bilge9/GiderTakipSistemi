@@ -146,4 +146,5 @@ namespace GiderTakipSistemi.Controllers
             return View(giderFis);
         }
     }
+
 }

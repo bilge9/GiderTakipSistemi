@@ -2,32 +2,64 @@
     <link rel="stylesheet" href="~/css/rapor.css" asp-append-version="true" />
 }
 
-<form method="get" asp-action="Index" asp-controller="Rapor" class="mb-3 report-card">
-        <div class="col-md-3">
-            <label>Tarih</label>
-            <input type="date" name="baslangic" value="@ViewBag.Baslangic" class="form-control" />
-        </div>
+<div class="report-card">
+    <h3>Tüm Giderler</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Tarih</th>
+                <th>Cari</th>
+                <th>Kalem</th>
+                <th>Tutar</th>
+                <th>Detay</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var g in ViewBag.TumGiderler)
+            {
+                <tr>
+                    <td>@g.Tarih.ToString("dd.MM.yyyy")</td>
+                    <td>@g.CariKayit?.AdSoyad</td>
+                    <td>@g.GiderKalem?.KalemAdi</td>
+                    <td>@g.Tutar TL</td>
+                    <td>
+                        <a asp-controller="KullaniciGider" asp-action="Details" asp-route-id="@g.Id" class="btn btn-sm btn-info">
+                            Görüntüle
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
-        <div class="col-md-3">
-            <label>Cari</label>
-            <select name="cariId" class="form-control">
-                <option value="">Hepsi</option>
-                @foreach (var c in ViewBag.CariList)
-                {
-                    <option value="@c.Value" selected="@(c.Value == ViewBag.CariId?.ToString())">@c.Text</option>
-                }
-            </select>
-        </div>
-        <div class="col-md-3">
-            <label>Gider Kalemi</label>
-            <select name="kalemId" class="form-control">
-                <option value="">Hepsi</option>
-                @foreach (var k in ViewBag.KalemList)
-                {
-                    <option value="@k.Value" selected="@(k.Value == ViewBag.KalemId?.ToString())">@k.Text</option>
-                }
-            </select>
-        </div>
+
+<form method="get" asp-action="Index" asp-controller="Rapor" class="mb-3 report-card">
+    <div class="col-md-3">
+        <label>Tarih</label>
+        <input type="date" name="baslangic" value="@ViewBag.Baslangic" class="form-control" />
+    </div>
+
+    <div class="col-md-3">
+        <label>Cari</label>
+        <select name="cariId" class="form-control">
+            <option value="">Hepsi</option>
+            @foreach (var c in ViewBag.CariList)
+            {
+                <option value="@c.Value" selected="@(c.Value == ViewBag.CariId?.ToString())">@c.Text</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label>Gider Kalemi</label>
+        <select name="kalemId" class="form-control">
+            <option value="">Hepsi</option>
+            @foreach (var k in ViewBag.KalemList)
+            {
+                <option value="@k.Value" selected="@(k.Value == ViewBag.KalemId?.ToString())">@k.Text</option>
+            }
+        </select>
+    </div>
     <div class="row mt-3">
         <div class="col-md-3 d-flex align-items-end">
             <button type="submit" class="btn btn-primary">Filtrele</button>
@@ -41,45 +73,96 @@
 </div>
 
 <div class="report-card">
-<h3>Cari Bazlı Giderler</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Cari</th>
-            <th>Toplam Tutar</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in ViewBag.CariBazli)
-        {
+    <h3>Cari Bazlı Giderler</h3>
+    <table class="table">
+        <thead>
             <tr>
-                <td>@item.Cari</td>
-                <td>@item.ToplamTutar</td>
+                <th>Cari</th>
+                <th>Toplam Tutar</th>
             </tr>
-        }
-    </tbody>
-</table>
-
-<hr />
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.CariBazli)
+            {
+                <tr>
+                    <td>
+                        <a asp-controller="KullaniciGider" asp-action="Index" asp-route-cariId="@item.CariId">
+                            @item.Cari
+                        </a>
+                    </td>
+                    <td>@item.ToplamTutar</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 
 <div class="report-card">
-<h3>Gider Kalemi Bazlı Giderler</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Kalem</th>
-            <th>Toplam Tutar</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in ViewBag.KalemBazli)
-        {
+    <h3>Gider Kalemi Bazlı Giderler</h3>
+    <table class="table">
+        <thead>
             <tr>
-                <td>@item.Kalem</td>
-                <td>@item.ToplamTutar</td>
+                <th>Kalem</th>
+                <th>Toplam Tutar</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.KalemBazli)
+            {
+                <tr>
+                    <td>
+                        <a asp-controller="KullaniciGider" asp-action="Index" asp-route-giderKalemId="@item.KalemId">
+                            @item.Kalem
+                        </a>
+                    </td>
+                    <td>@item.ToplamTutar</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
+<div class="report-card">
+    <h3>Gider Kalemlerine Göre Dağılım</h3>
+    <canvas id="giderChart" width="400" height="200"></canvas>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('giderChart').getContext('2d');
+        var giderChart = new Chart(ctx, {
+            type: 'pie', // çubuk grafik için 'bar' yazabilirsiniz
+            data: {
+                labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.GiderKalemleri)),
+                datasets: [{
+                    label: 'Toplam Gider',
+                    data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.GiderToplamlari)),
+                    backgroundColor: [
+                        '#4e54c8',
+                        '#8f94fb',
+                        '#ff6384',
+                        '#36a2eb',
+                        '#ffce56',
+                        '#4bc0c0',
+                        '#9966ff'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.label + ': ' + context.raw + ' TL';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+}

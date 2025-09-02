@@ -1,9 +1,10 @@
-﻿/* Genel form container */
-body {
+﻿body {
 	background: #f5f7fa;
 	font-family: 'Poppins', sans-serif;
 	color: #333;
 }
+
+/* Genel form container */
 .gider-form {
 	background: #fff;
 	border-radius: 15px;

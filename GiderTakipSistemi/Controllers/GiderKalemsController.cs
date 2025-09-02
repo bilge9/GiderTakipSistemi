@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using GiderTakipSistemi.Data;
+using GiderTakipSistemi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using GiderTakipSistemi.Data;
-using GiderTakipSistemi.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GiderTakipSistemi.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class GiderKalemsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -34,6 +36,7 @@ namespace GiderTakipSistemi.Controllers
             }
 
             var giderKalem = await _context.GiderKalemleri
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (giderKalem == null)
             {

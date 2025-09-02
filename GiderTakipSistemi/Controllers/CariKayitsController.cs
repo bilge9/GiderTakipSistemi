@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GiderTakipSistemi.Data;
 using GiderTakipSistemi.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GiderTakipSistemi.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CariKayitsController : Controller
     {
         private readonly ApplicationDbContext _context;
