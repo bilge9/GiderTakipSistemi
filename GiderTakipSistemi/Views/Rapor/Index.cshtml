@@ -1,5 +1,8 @@
-﻿<form method="get" asp-action="Index" asp-controller="Rapor" class="mb-3">
-    <div class="row">
+﻿@section Styles {
+    <link rel="stylesheet" href="~/css/rapor.css" asp-append-version="true" />
+}
+
+<form method="get" asp-action="Index" asp-controller="Rapor" class="mb-3 report-card">
         <div class="col-md-3">
             <label>Tarih</label>
             <input type="date" name="baslangic" value="@ViewBag.Baslangic" class="form-control" />
@@ -25,7 +28,6 @@
                 }
             </select>
         </div>
-    </div>
     <div class="row mt-3">
         <div class="col-md-3 d-flex align-items-end">
             <button type="submit" class="btn btn-primary">Filtrele</button>
@@ -33,11 +35,12 @@
     </div>
 </form>
 
-<h3>Genel Toplam Gider</h3>
-<p><strong>@ViewBag.ToplamGider</strong> TL</p>
+<div class="report-card">
+    <h3>Genel Toplam Gider</h3>
+    <p class="total-box">@ViewBag.ToplamGider TL</p>
+</div>
 
-<hr />
-
+<div class="report-card">
 <h3>Cari Bazlı Giderler</h3>
 <table class="table">
     <thead>
@@ -58,7 +61,9 @@
 </table>
 
 <hr />
+</div>
 
+<div class="report-card">
 <h3>Gider Kalemi Bazlı Giderler</h3>
 <table class="table">
     <thead>
@@ -77,3 +82,4 @@
         }
     </tbody>
 </table>
+</div>

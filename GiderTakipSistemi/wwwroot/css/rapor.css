@@ -1,0 +1,91 @@
+﻿/* Sayfa genel görünüm */
+body {
+    background: #f5f7fa;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+}
+
+/* Kart benzeri alan */
+.report-card {
+    background: #fff;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+/* Form alanı */
+form label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #444;
+}
+
+form .form-control {
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    box-shadow: none;
+    transition: 0.3s;
+}
+
+    form .form-control:focus {
+        border-color: #4e73df;
+        box-shadow: 0 0 8px rgba(78, 115, 223, 0.3);
+    }
+
+button.btn-primary {
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 10px 25px;
+    background: linear-gradient(135deg, #4e73df, #224abe);
+    border: none;
+    transition: 0.3s;
+}
+
+    button.btn-primary:hover {
+        background: linear-gradient(135deg, #224abe, #1a2f77);
+        transform: translateY(-2px);
+    }
+
+/* Başlıklar */
+h3 {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-weight: 700;
+    color: #2c3e50;
+    border-left: 5px solid #4e73df;
+    padding-left: 10px;
+}
+
+/* Tablo */
+.table {
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+}
+
+    .table thead {
+        background: #4e73df;
+        color: #fff;
+    }
+
+    .table th, .table td {
+        vertical-align: middle;
+        padding: 12px 15px;
+    }
+
+    .table tbody tr:hover {
+        background: #f1f3f9;
+        transition: 0.2s;
+    }
+
+/* Genel toplam kutusu */
+.total-box {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #27ae60;
+    background: #eafaf1;
+    padding: 15px 20px;
+    border-radius: 12px;
+    display: inline-block;
+}

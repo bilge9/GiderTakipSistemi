@@ -1,0 +1,65 @@
+﻿/* Genel form container */
+body {
+	background: #f5f7fa;
+	font-family: 'Poppins', sans-serif;
+	color: #333;
+}
+.gider-form {
+	background: #fff;
+	border-radius: 15px;
+	padding: 30px;
+	margin: 20px auto;
+	max-width: 700px;
+	box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+	/* Başlık */
+	.gider-form h1 {
+		font-weight: 700;
+		color: #2c3e50;
+		margin-bottom: 25px;
+		border-left: 6px solid #4e73df;
+		padding-left: 12px;
+	}
+
+	/* Label */
+	.gider-form label {
+		font-weight: 600;
+		margin-bottom: 6px;
+		color: #444;
+	}
+
+	/* Input, Select */
+	.gider-form .form-control {
+		border-radius: 10px;
+		border: 1px solid #ddd;
+		box-shadow: none;
+		transition: 0.3s;
+		padding: 10px;
+	}
+
+		.gider-form .form-control:focus {
+			border-color: #4e73df;
+			box-shadow: 0 0 8px rgba(78,115,223,0.3);
+		}
+
+	/* Validation */
+	.gider-form .text-danger {
+		font-size: 0.9rem;
+		margin-top: 3px;
+	}
+
+	/* Buton */
+	.gider-form .btn-primary {
+		border-radius: 12px;
+		font-weight: 600;
+		padding: 10px 25px;
+		background: linear-gradient(135deg, #4e73df, #224abe);
+		border: none;
+		transition: 0.3s;
+	}
+
+		.gider-form .btn-primary:hover {
+			background: linear-gradient(135deg, #224abe, #1a2f77);
+			transform: translateY(-2px);
+		}
