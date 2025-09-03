@@ -4,9 +4,8 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Düzenle</h1>
 
-<h4>GiderFis</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -39,16 +38,37 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Kaydet" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Listeye dön.</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+<style>
+    body {
+        background: #f5f7fa;
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+    }
+
+    .btn-primary {
+        margin-top: 10px;
+        border-radius: 12px;
+        padding: 8px 20px;
+        background: linear-gradient(135deg, #1cc88a, #13855c);
+        border: none;
+        color: #fff;
+        font-weight: 600;
+    }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #13855c, #0f5e42);
+        }
+</style>

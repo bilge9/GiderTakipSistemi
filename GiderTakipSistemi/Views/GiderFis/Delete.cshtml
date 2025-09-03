@@ -4,11 +4,8 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Silme</h1>
-
 <h3>Silmek istediğinizden emin misiniz?</h3>
 <div>
-    <h4>GiderFis</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -39,7 +36,15 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Sil" class="btn btn-danger" />
+        <div><a asp-action="Index">Listeye dön.</a></div>
     </form>
 </div>
+
+<style>
+    body {
+        background: #f5f7fa;
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+    }
+</style>

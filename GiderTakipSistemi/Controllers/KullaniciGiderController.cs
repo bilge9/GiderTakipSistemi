@@ -3,11 +3,9 @@ using GiderTakipSistemi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
-
 
 namespace GiderTakipSistemi.Controllers
 {
@@ -38,7 +36,34 @@ namespace GiderTakipSistemi.Controllers
             if (giderKalemId.HasValue)
                 query = query.Where(g => g.GiderKalemId == giderKalemId.Value);
 
-            return View(await query.ToListAsync());
+            var giderList = await query.ToListAsync();
+
+            // ✅ Genel toplam
+            ViewBag.ToplamGider = giderList.Any() ? giderList.Sum(g => g.Tutar) : 0;
+
+            // ✅ Cari bazlı toplam
+            ViewBag.CariBazli = giderList
+                .GroupBy(g => g.CariKayit)
+                .Select(x => new
+                {
+                    CariId = x.Key.Id,
+                    Cari = x.Key.AdSoyad,
+                    ToplamTutar = x.Sum(g => g.Tutar)
+                })
+                .ToList();
+
+            // ✅ Gider kalemi bazlı toplam (ileride grafik için kullanabilirsin)
+            ViewBag.KalemBazli = giderList
+                .GroupBy(g => g.GiderKalem)
+                .Select(x => new
+                {
+                    KalemId = x.Key.Id,
+                    Kalem = x.Key.KalemAdi,
+                    ToplamTutar = x.Sum(g => g.Tutar)
+                })
+                .ToList();
+
+            return View(giderList);
         }
 
         public async Task<IActionResult> Details(int id)
@@ -55,5 +80,4 @@ namespace GiderTakipSistemi.Controllers
             return View(gider);
         }
     }
-
 }

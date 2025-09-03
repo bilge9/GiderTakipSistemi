@@ -123,15 +123,16 @@
 </div>
 <div class="report-card">
     <h3>Gider Kalemlerine Göre Dağılım</h3>
-    <canvas id="giderChart" width="400" height="200"></canvas>
+    <canvas id="giderChart" style="max-width:300px; max-height:300px;"></canvas>
+
 </div>
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         var ctx = document.getElementById('giderChart').getContext('2d');
-        var giderChart = new Chart(ctx, {
-            type: 'pie', // çubuk grafik için 'bar' yazabilirsiniz
+                var giderChart = new Chart(ctx, {
+            type: 'pie',
             data: {
                 labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.GiderKalemleri)),
                 datasets: [{
@@ -150,6 +151,7 @@
             },
             options: {
                 responsive: true,
+                aspectRatio: 1.2, // burayı 0.8, 1, 1.5 gibi değerlerle oynayabilirsin
                 plugins: {
                     legend: {
                         position: 'bottom',
@@ -164,5 +166,6 @@
                 }
             }
         });
+
     </script>
 }
